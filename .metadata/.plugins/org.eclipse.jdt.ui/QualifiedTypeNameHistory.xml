@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.temboo.Library.Google.Places.PlaceSearch"/>
+<fullyQualifiedTypeName name="com.temboo.Library.Google.Places.PlaceSearch.PlaceSearchInputSet"/>
+<fullyQualifiedTypeName name="com.temboo.Library.Google.Places.PlaceSearch.PlaceSearchResultSet"/>
+<fullyQualifiedTypeName name="com.temboo.core.TembooSession"/>
+</qualifiedTypeNameHistroy>

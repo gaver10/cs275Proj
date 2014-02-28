@@ -1,0 +1,108 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (javaClasses.cpp:136), pid=29000, tid=29388
+#  fatal error: Invalid layout of preloaded class
+#
+# JRE version:  (7.0_40-b43) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (24.0-b56 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000001f4e800):  JavaThread "Unknown thread" [_thread_in_vm, id=29388, stack(0x0000000001fd0000,0x00000000020d0000)]
+
+Stack: [0x0000000001fd0000,0x00000000020d0000]
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x0000000001f4e800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=29388, stack(0x0000000001fd0000,0x00000000020d0000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (10 events):
+Event: 0.039 loading class 0x0000000002114400 done
+Event: 0.040 loading class 0x0000000002113e20 done
+Event: 0.040 loading class 0x0000000002113e00
+Event: 0.040 loading class 0x000000000211bf00
+Event: 0.041 loading class 0x000000000211bf00 done
+Event: 0.041 loading class 0x000000000211bf30
+Event: 0.041 loading class 0x000000000211bf30 done
+Event: 0.041 loading class 0x000000000211bf60
+Event: 0.041 loading class 0x000000000211bf60 done
+Event: 0.042 loading class 0x0000000002113e00 done
+
+
+Dynamic libraries:
+0x000007f6f0e90000 - 0x000007f6f0ec3000 	C:\Program Files\Java\jre7\bin\javaw.exe
+0x000007f992080000 - 0x000007f992240000 	C:\windows\SYSTEM32\ntdll.dll
+0x000007f98f780000 - 0x000007f98f8b6000 	C:\windows\system32\KERNEL32.DLL
+0x000007f98f000000 - 0x000007f98f0f3000 	C:\windows\system32\KERNELBASE.dll
+0x000007f991700000 - 0x000007f9917de000 	C:\windows\system32\ADVAPI32.dll
+0x000007f990e50000 - 0x000007f990f9c000 	C:\windows\system32\USER32.dll
+0x000007f98e930000 - 0x000007f98eb9a000 	C:\windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.9200.16579_none_418ab7ef718b27ef\COMCTL32.dll
+0x000007f9912b0000 - 0x000007f991355000 	C:\windows\system32\msvcrt.dll
+0x000007f991200000 - 0x000007f991248000 	C:\windows\SYSTEM32\sechost.dll
+0x000007f990fa0000 - 0x000007f9910e5000 	C:\windows\system32\RPCRT4.dll
+0x000007f9919f0000 - 0x000007f991b31000 	C:\windows\system32\GDI32.dll
+0x000007f991270000 - 0x000007f9912a9000 	C:\windows\system32\IMM32.DLL
+0x000007f991dd0000 - 0x000007f991ee6000 	C:\windows\system32\MSCTF.dll
+0x0000000071c80000 - 0x0000000071d51000 	C:\Program Files\Java\jre7\bin\msvcr100.dll
+0x00000000714b0000 - 0x0000000071c79000 	C:\Program Files\Java\jre7\bin\server\jvm.dll
+0x000007f988070000 - 0x000007f988079000 	C:\windows\SYSTEM32\WSOCK32.dll
+0x000007f988050000 - 0x000007f988070000 	C:\windows\SYSTEM32\WINMM.dll
+0x000007f98f6a0000 - 0x000007f98f6a7000 	C:\windows\system32\PSAPI.DLL
+0x000007f991190000 - 0x000007f9911e8000 	C:\windows\system32\WS2_32.dll
+0x000007f988010000 - 0x000007f988043000 	C:\windows\SYSTEM32\WINMMBASE.dll
+0x000007f991590000 - 0x000007f991599000 	C:\windows\system32\NSI.dll
+0x000007f98f340000 - 0x000007f98f38f000 	C:\windows\SYSTEM32\cfgmgr32.dll
+0x000007f98f390000 - 0x000007f98f3b2000 	C:\windows\system32\DEVOBJ.dll
+0x00000000714a0000 - 0x00000000714af000 	C:\Program Files\Java\jre7\bin\verify.dll
+0x0000000071470000 - 0x0000000071498000 	C:\Program Files\Java\jre7\bin\java.dll
+0x0000000071450000 - 0x0000000071465000 	C:\Program Files\Java\jre7\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=Cp1252 -Xbootclasspath:C:\Users\Gavin\android-sdks\platforms\android-19\android.jar 
+java_command: com.example.cs_275proj.TestDriver
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\Samsung\AllShare Framework DMS\1.3.14\;C:\Program Files\Samsung\AllShare Framework DMS\1.3.14\64bit\;C:\Program Files\TortoiseSVN\bin
+USERNAME=Gavin
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 22 Model 0 Stepping 1, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 8 , 64 bit Build 9200 
+
+CPU:total 4 (4 cores per cpu, 1 threads per core) family 22 model 0 stepping 1, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit, tscinv
+
+Memory: 4k page, physical 3611348k(1733128k free), swap 7281368k(4516168k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (24.0-b56) for windows-amd64 JRE (1.7.0_40-b43), built on Aug 26 2013 22:38:32 by "java_re" with unknown MS VC++:1600
+
+time: Fri Feb 28 15:13:08 2014
+elapsed time: 0 seconds
+
