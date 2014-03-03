@@ -1,0 +1,10 @@
+package com.example.cs_275proj;
+
+public class CloudmineManager {
+
+	private String apikey = "dfc150fe989c41869778972802e70b04";
+	private String appkey = "976aa71a1bfe48258fcac26c097c9789";
+	
+	
+	
+}
