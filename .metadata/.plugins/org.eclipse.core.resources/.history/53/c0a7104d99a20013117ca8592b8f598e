@@ -1,0 +1,52 @@
+package com.example.cs_275proj;
+
+import com.google.gson.JsonObject;
+import com.temboo.Library.CloudMine.ObjectStorage.ObjectUpdate;
+import com.temboo.Library.CloudMine.ObjectStorage.ObjectUpdate.ObjectUpdateInputSet;
+import com.temboo.core.TembooException;
+import com.temboo.core.TembooSession;
+
+public class CloudmineManager {
+
+	private String apikey = "dfc150fe989c41869778972802e70b04";
+	private String appkey = "976aa71a1bfe48258fcac26c097c9789";
+	private TembooSession session;
+	
+	public void CloudmineManger(TembooSession s){ 
+		
+		 session = s;
+		
+	}
+	
+	//Todo
+	public String filterGoogle(String googlePlacelist){
+		
+		return "";
+		
+	}
+	
+	public String getRating(String locId){
+		
+		return "";
+		
+	}
+	
+	public String sendRating(String rating,UserInfo user,String locid){
+		
+		
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("rating", rating);
+		
+		
+		ObjectUpdate objectUpdateChoreo = new ObjectUpdate(session);
+
+		
+		ObjectUpdateInputSet objectUpdateInputs = objectUpdateChoreo.newInputSet();
+		objectUpdateInputs.set_Data("");
+		objectUpdateInputs.set_APIKey(apikey);
+		objectUpdateInputs.set_ApplicationIdentifier(appkey);
+
+		
+	}
+	
+}

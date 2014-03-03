@@ -1,6 +1,12 @@
 package com.example.cs_275proj;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.temboo.Library.CloudMine.ObjectStorage.ObjectGet;
+import com.temboo.Library.CloudMine.ObjectStorage.ObjectGet.ObjectGetInputSet;
+import com.temboo.Library.CloudMine.ObjectStorage.ObjectGet.ObjectGetResultSet;
 import com.temboo.Library.CloudMine.ObjectStorage.ObjectUpdate;
 import com.temboo.Library.CloudMine.ObjectStorage.ObjectUpdate.ObjectUpdateInputSet;
 import com.temboo.core.TembooException;
@@ -23,14 +29,6 @@ public class CloudmineManager {
          ReviewDB = r;
         
     }
-    
-       /*     
-        for each thing in google the google list:
-             if: IDarray.has("googleId")
-                   add to list
-             else:
-                   move on 
-      */
     
     //Todo
     public ArrayList<String> filterGoogle(String googlePlaceList){
@@ -78,14 +76,19 @@ public class CloudmineManager {
         JsonParser jp = new JsonParser();
         JsonElement root = jp.parse(objectBetResult.get_Response());
         JsonObject rootobj = root.get("success").getAsJsonObject();
-        JsonObject IDs = rootobj.get(LocDB).getAsJsonObject();
+        JsonObject IDarray = rootobj.get(LocDB).getAsJsonObject();
         String id = "";
-              
-  /*
+        
+   /*     
+        for each thing in google the google list:
+             if: IDarray.has("googleId")
+                   add to list
+             else:
+                   move on 
+  */      
         for (int i = 0; i < IDarray.size(); i++) {
             if(locId.equlas(IDarray.get("id").getAsString()[i])) {
-   */
-        for              
+                
                 id = locId;
                 ObjectGetInputSet objectGetInputs = objectGetChoreo.newInputSet();
                 objectGetInputs.set_APIKey(apikey);
