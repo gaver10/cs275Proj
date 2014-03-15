@@ -5,6 +5,7 @@ public class UserInfo {
 	private String userId;
 	private String lat;
 	private String lon;
+	private String name;
 
 	public void setUserId(String id){
 		
@@ -33,6 +34,16 @@ public class UserInfo {
 	
 	public String getUserId(){
 		return userId;
+	}
+	
+	public void setName(String n){
+		
+		name = n;
+		
+	}
+	
+	public String getName(){
+		return name;
 	}
 	
 	
