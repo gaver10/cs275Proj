@@ -4,7 +4,7 @@ package com.example.cs_275proj;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
-
+ 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -29,7 +29,7 @@ import com.temboo.core.TembooSession;
         private String UserDB;
         private String ReviewDB;
         
-        public void CloudmineManger(TembooSession s,String l,String u,String r) { 
+        public CloudmineManager(TembooSession s,String l,String u,String r) { 
             
              session = s;
              LocDB = l;
@@ -69,7 +69,7 @@ import com.temboo.core.TembooSession;
      
         }
         
-        public Integer getRating(String locId){
+        public Integer getRating(String locid) throws TembooException{
             int finalRating = 0;
             int count = 0;  
             
@@ -78,7 +78,7 @@ import com.temboo.core.TembooSession;
             ObjectGetInputSet objectGetInputs = objectGetChoreo.newInputSet();
             objectGetInputs.set_APIKey(apikey);
             objectGetInputs.set_ApplicationIdentifier(appkey);
-            objectGetInputs.set_Keys(ReviewDB); // get the locations database
+            objectGetInputs.set_Keys(ReviewDB+","+LocDB); // get the locations database
             ObjectGetResultSet objectGetResults = objectGetChoreo.execute(objectGetInputs);
      
             JsonParser jp = new JsonParser();
@@ -86,21 +86,25 @@ import com.temboo.core.TembooSession;
             JsonObject rootobj = root.getAsJsonObject().get("success").getAsJsonObject();
             JsonObject ReviewDatabase = rootobj.get(ReviewDB).getAsJsonObject();
               
-
-            for (JsonObject key: ReviewDatabase) {
-                if (key.get("locationid").getAsString().equals(locId)){
-                    finalRating += Integer.parseInt(key.get("rating").getAsString());
-                    count++;
-                }
+            JsonObject userObject = rootobj.get(LocDB).getAsJsonObject();
+            JsonArray reviewIds = userObject.get(locid).getAsJsonObject().get("reviews").getAsJsonArray();
+           
+            
+       
+            for (int i=0; i<reviewIds.size(); i++) {
+                   finalRating=+ReviewDatabase.get(reviewIds.get(i).getAsString()).getAsJsonObject().get("rating").getAsInt();
+                   
+                   count = count + 1;
             }
-            
             finalRating = finalRating / count;
-            return (Integer) finalRating;
             
+            return (Integer) finalRating;
         }
         	
         public void sendReview(String review,String rating, UserInfo user,String locid) throws TembooException{
             
+        	
+        	
             JsonObject reviewObject = new JsonObject();
             
             reviewObject.addProperty("rating", rating);
@@ -138,22 +142,42 @@ import com.temboo.core.TembooSession;
         
         private void updateReviewIds(UserInfo user,String locId,String reviewId) throws TembooException{
         	
-        	JsonArray userJson = new JsonArray();
-            
+        	
+        	
+        	ObjectGet objectGetChoreo = new ObjectGet(session);
+
+            ObjectGetInputSet objectGetInputs = objectGetChoreo.newInputSet();
+            objectGetInputs.set_APIKey(apikey);
+            objectGetInputs.set_ApplicationIdentifier(appkey);
+            objectGetInputs.set_Keys(UserDB+","+LocDB); // get the locations database
+            ObjectGetResultSet objectGetResults = objectGetChoreo.execute(objectGetInputs);
+     
+            JsonParser jp = new JsonParser();
+            JsonElement root = jp.parse(objectGetResults.get_Response());
+            JsonObject rootobj = root.getAsJsonObject().get("success").getAsJsonObject();
+            JsonObject UserDatabase = rootobj.get(UserDB).getAsJsonObject();
+            JsonObject LocDatabase = rootobj.get(LocDB).getAsJsonObject();
+        	
+        	
+        	
+        	JsonArray userJson = UserDatabase.get(user.getUserId()).getAsJsonObject().get("reviews").getAsJsonArray();
+        	JsonArray locJson = LocDatabase.get(locId).getAsJsonObject().get("reviews").getAsJsonArray();
         	JsonPrimitive ri = new JsonPrimitive(reviewId);
         	
             userJson.add(ri);
+            locJson.add(ri);
             
     
-            JsonObject revObject = new JsonObject();
-           
-            revObject.add("reviews",userJson);
+            JsonObject revLObject = new JsonObject();
+            JsonObject revUObject = new JsonObject();
+            revUObject.add("reviews",userJson);
+            revLObject.add("reviews",locJson);
             
             JsonObject userObject = new JsonObject();
             JsonObject locObject = new JsonObject();
             
-            userObject.add(user.getUserId(),revObject);
-            locObject.add(locId,revObject);
+            userObject.add(user.getUserId(),revUObject);
+            locObject.add(locId,revLObject);
             
             JsonObject m_userObject = new JsonObject();
             JsonObject m_locObject = new JsonObject();
@@ -327,40 +351,40 @@ import com.temboo.core.TembooSession;
             
             
             public ArrayList<String> getLocPrizes(String locid) {
-            
-            ObjectGet objectGetChoreo = new ObjectGet(session);
+                
+                ObjectGet objectGetChoreo = new ObjectGet(session);
 
-            // Get an InputSet object for the choreo
-            ObjectGetInputSet objectGetInputs = objectGetChoreo.newInputSet();
+                // Get an InputSet object for the choreo
+                ObjectGetInputSet objectGetInputs = objectGetChoreo.newInputSet();
+                
+                // Set inputs
+                objectGetInputs.set_APIKey(apikey);
+                objectGetInputs.set_ApplicationIdentifier(appkey);
+                objectGetInputs.set_Keys("LocDB");
+                
+                // Execute Choreo
+                ObjectGetResultSet objectGetResults = objectGetChoreo.execute(objectGetInputs);
+                JsonParser jp = new JsonParser();
+                JsonElement root = jp.parse(objectGetResults.get_Response());
+                JsonObject rootobj = root.getAsJsonObject().get("success").getAsJsonObject();
+                // the whole location database
+                JsonObject userObject = rootobj.get(LocDB).getAsJsonObject();
+                JsonObject location = userObject.get(locid).getAsJsonObject();
+                JsonObject rewards = location.get("rewards").getAsJsonObject();
+                
+                ArrayList<String> rewardString = new ArrayList<String>();
+                for (JsonObject rewardID: rewards ) {
+                   JsonObject eachReward =  rewards.get("rewardID").getAsJsonObject();
+                   String name = eachReward.get("reward").getAsString();
+                   String cost = eachReward.get("cost").getAsString(); 
+                      rewardString.add(name + "   " + cost);
+                }
+                
+                return rewardString;
+                }
             
-            // Set inputs
-            objectGetInputs.set_APIKey(apikey);
-            objectGetInputs.set_ApplicationIdentifier(appkey);
-            objectGetInputs.set_Keys("LocDB");
             
-            // Execute Choreo
-            ObjectGetResultSet objectGetResults = objectGetChoreo.execute(objectGetInputs);
-            JsonParser jp = new JsonParser();
-            JsonElement root = jp.parse(objectGetResults.get_Response());
-            JsonObject rootobj = root.getAsJsonObject().get("success").getAsJsonObject();
-            // the whole location database
-            JsonObject userObject = rootobj.get(LocDB).getAsJsonObject();
-            JsonObject location = userObject.get(locid).getAsJsonObject();
-            JsonObject rewards = location.get("rewards").getAsJsonObject();
-            
-            ArrayList<String> rewardString = new ArrayList<String>();
-            for (JsonObject rewardID: rewards ) {
-               JsonObject eachReward =  rewards.get("rewardID").getAsJsonObject();
-               String name = eachReward.get("reward").getAsString();
-               String cost = eachReward.get("cost").getAsString(); 
-                  rewardString.add(name + "   " + cost);
-            }
-            
-            return rewardString;
-            }
-            
-            
-            public Integer getPoints (String locid, String userid) {
+            	public Integer getPoints (String locid, String userid) {
                 
                 Integer points = 0;
                 ObjectGet objectGetChoreo = new ObjectGet(session);
@@ -374,64 +398,59 @@ import com.temboo.core.TembooSession;
                 objectGetInputs.set_Keys("UserDB");
             
                 // Execute Choreo
-                ObjectGetResultSet objectGetResults = objectGetChoreo.execute(objectGetInputs);
+                ObjectGetResultSet objectGetResults = null;
+                try {
+                    objectGetResults = objectGetChoreo.execute(objectGetInputs);
+                } catch (TembooException e) {
+                    e.printStackTrace();
+                }
                 JsonParser jp = new JsonParser();
                 JsonElement root = jp.parse(objectGetResults.get_Response());
                 JsonObject rootobj = root.getAsJsonObject().get("success").getAsJsonObject();
                 // the whole location database
                 JsonObject userObject = rootobj.get(UserDB).getAsJsonObject();
                 JsonObject user = userObject.get(userid).getAsJsonObject();
-                JsonArray Points = user.get("Points").getAsJsonArray();
+                JsonObject Points = user.get("Points").getAsJsonObject();
                 
-                //!!!!!!!!!!!!!!!!!!!!!! probably not right
-                for (int i=0; i<Points.size(); i++) {
-                    if (Points.get(i).get(locid).equals(locid)) {
-                        Points = Points.get(i).get(locid).get("Points").getAsInt();
-                    }
-                }
+                int rating = Points.get(locid).getAsInt();
                 
-            return Points;
+            return rating;
             }
             
             
             
-            public ArrayList<String> getReviews(String locid){
-                
-                
-                ObjectGet objectGetChoreo = new ObjectGet(session);
+            	 public ArrayList<String> getReviews(String locid) throws TembooException{
+                     
+                     ObjectGet objectGetChoreo = new ObjectGet(session);
 
-                // Get an InputSet object for the choreo
-                ObjectGetInputSet objectGetInputs = objectGetChoreo.newInputSet();
-            
-                // Set inputs
-                objectGetInputs.set_APIKey(apikey);
-                objectGetInputs.set_ApplicationIdentifier(appkey);
-                objectGetInputs.set_Keys("UserDB");
-            
-                // Execute Choreo
-                ObjectGetResultSet objectGetResults = objectGetChoreo.execute(objectGetInputs);
-                JsonParser jp = new JsonParser();
-                JsonElement root = jp.parse(objectGetResults.get_Response());
-                JsonObject rootobj = root.getAsJsonObject().get("success").getAsJsonObject();
-                // the whole location database
-                JsonObject userObject = rootobj.get(UserDB).getAsJsonObject();
-                JsonArray reviewIds = userObject.get(locid).getAsJsonObject().get("reviews").getAsJsonArray();
-                
-                JsonObject reviewDb = getReviewDB();
-                
-                
-                ArrayList<String> rev = new ArrayList<String> ();
-                for (int i=0; i<reviewIds.size(); i++) {
-                       for (JsonObject key: reviewDb) {
-                           if (reviewIds.get(i).equals(key)) {
-                               add(reviewDb.get(key).getAsJsonObject().get("text").getAsString());
-                           }
-                       }
-                }
-                
-            return rev;
-            
-            }
+                     // Get an InputSet object for the choreo
+                     ObjectGetInputSet objectGetInputs = objectGetChoreo.newInputSet();
+                 
+                     // Set inputs
+                     objectGetInputs.set_APIKey(apikey);
+                     objectGetInputs.set_ApplicationIdentifier(appkey);
+                     objectGetInputs.set_Keys("LocDB");
+                 
+                     // Execute Choreo
+                     ObjectGetResultSet objectGetResults = objectGetChoreo.execute(objectGetInputs);
+                     JsonParser jp = new JsonParser();
+                     JsonElement root = jp.parse(objectGetResults.get_Response());
+                     JsonObject rootobj = root.getAsJsonObject().get("success").getAsJsonObject();
+                     // the whole location database
+                     JsonObject userObject = rootobj.get(LocDB).getAsJsonObject();
+                     JsonArray reviewIds = userObject.get(locid).getAsJsonObject().get("reviews").getAsJsonArray();
+                    
+                     JsonObject reviewDb = getReviewDB();
+                    
+                     ArrayList<String> rev = new ArrayList<String> ();
+                     for (int i=0; i<reviewIds.size(); i++) {
+                                                                                   
+                    	 rev.add(reviewDb.get(reviewIds.get(i).getAsString()).getAsJsonObject().get("text").getAsString());
+                     }
+                     
+                 return rev;
+                 
+                 }
             
             // just used for the function above; we need to put most of the Json parsing in a function at some point
            
@@ -470,7 +489,10 @@ import com.temboo.core.TembooSession;
             	JsonObject userName = new JsonObject();
                 
                 userName.addProperty("name",user.getName());
-            	
+                userName.add("Points",new JsonObject());
+                userName.add("reviews",new JsonArray());
+                
+                
             	JsonObject userJson = new JsonObject();
                 
                 userJson.add(user.getUserId(),userName);
