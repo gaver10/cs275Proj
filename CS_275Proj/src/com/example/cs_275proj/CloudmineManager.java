@@ -53,7 +53,7 @@ import com.temboo.core.TembooSession;
             ArrayList<String> placesNearby = new ArrayList<String>();
                 for (int j = 0; j < googlePlaceList.size(); j++) {
                     if (LocDatabase.has(googlePlaceList.get(j))) {
-                              placesNearby.add(googlePlaceList.get(j));
+                    	placesNearby.add(googlePlaceList.get(j));
                     }
                 }
          

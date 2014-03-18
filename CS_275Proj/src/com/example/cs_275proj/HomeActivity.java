@@ -15,11 +15,17 @@ public class HomeActivity extends Activity {
 	Button search;
 	
 	static ArrayAdapter<String> adapter;
+	
+	String username;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		
+		Intent intent = getIntent();
+		username = intent.getExtras().getString("name");
+
 		
 		location = (Button) findViewById(R.id.location);
 		profile = (Button) findViewById(R.id.profile);
@@ -38,6 +44,7 @@ public class HomeActivity extends Activity {
 		switch(v.getId()) {
 			case R.id.location:
 				Intent loc = new Intent(HomeActivity.this, LocationsActivity.class);
+				loc.putExtra("name", username);
 
 				startActivity(loc);
 				break;

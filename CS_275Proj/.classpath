@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="D:/Eclipse/temboo-java-sdk-1.76.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/Eclipse/temboo-android-sdk-1.76-core.jar"/>
 	<classpathentry exported="true" kind="lib" path="D:/Eclipse/Google-1.76.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>

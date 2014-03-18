@@ -13,7 +13,7 @@ import com.temboo.Library.Google.Places.PlaceSearch.PlaceSearchResultSet;
 import com.temboo.core.TembooException;
 import com.temboo.core.TembooSession;
 
-public class GooglePlaceManager extends AsyncTask<Void, Void, Void> {
+public class AsyncFindProfiles extends AsyncTask<Void, Void, Void> {
 	ArrayList<String> locs;
 	
 	TembooSession session;
@@ -52,9 +52,9 @@ public class GooglePlaceManager extends AsyncTask<Void, Void, Void> {
 
 		// Set inputs
 		placeSearchInputs.set_Key(apiKEY);
-		placeSearchInputs.set_Radius(1000);
-		placeSearchInputs.set_Latitude(LocationsActivity.user.getLat());
-		placeSearchInputs.set_Longitude(LocationsActivity.user.getLon());
+		placeSearchInputs.set_Radius(100);
+		placeSearchInputs.set_Latitude("39.957493");//userI.getLat());
+		placeSearchInputs.set_Longitude("-75.202752");//userI.getLon());
 
 		// Execute Choreo
 		PlaceSearchResultSet placeSearchResults = null;

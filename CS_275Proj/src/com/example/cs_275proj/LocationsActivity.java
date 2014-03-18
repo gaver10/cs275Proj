@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class LocationsActivity extends Activity {
 	ListView locations;
-
+	
+	static UserInfo user;
 	static ArrayAdapter<String> adapter;
 
 	@Override
@@ -19,6 +21,12 @@ public class LocationsActivity extends Activity {
 		setContentView(R.layout.activity_locations);
 		
 		locations = (ListView) findViewById(R.id.locations);
+		
+		user = new UserInfo();
+		Intent intent = getIntent();
+		user.setName(intent.getExtras().getString("name"));
+		user.setLat("37.029869");
+		user.setLon("-76.345222");
 		
 		ArrayList<String> locationList = new ArrayList<String>();
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, locationList);

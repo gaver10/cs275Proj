@@ -19,8 +19,6 @@ public class MainActivity extends Activity {
 		
 		username = (EditText) findViewById(R.id.username);
 		submit = (Button) findViewById(R.id.submit);
-
-		
 	}
 
 	@Override
@@ -33,6 +31,7 @@ public class MainActivity extends Activity {
 	public void onClick(View v) {
 		if(!username.getText().toString().isEmpty()) {
 			Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+			intent.putExtra("name", username.getText().toString());
 			startActivity(intent);
 		}
 	}
