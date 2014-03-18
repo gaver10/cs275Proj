@@ -2,9 +2,10 @@ package com.example.cs_275proj;
 
 import java.util.ArrayList;
 
+import android.os.AsyncTask;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.temboo.Library.Google.Places.PlaceSearch;
 import com.temboo.Library.Google.Places.PlaceSearch.PlaceSearchInputSet;
@@ -12,16 +13,36 @@ import com.temboo.Library.Google.Places.PlaceSearch.PlaceSearchResultSet;
 import com.temboo.core.TembooException;
 import com.temboo.core.TembooSession;
 
-public class GooglePlaceManager {
-
-	
-	private String apiKEY = "AIzaSyDpTTKmO2dPprtUv5UROog8eaEKsycaI8A";
-	
-	
-	public ArrayList<String> getNearby(UserInfo userI) throws TembooException{
+public class GooglePlaceManager extends AsyncTask<Void, Void, Void> {
+	ArrayList<String> locs;
 		
-		// Instantiate the Choreo, using a previously instantiated TembooSession object, eg:
-		TembooSession session = new TembooSession("gaver10", "myFirstApp", "c336c82fc4c641279410c79d9071a3c4");
+	@Override
+	protected void onPostExecute(Void arg0) {
+		LocationsActivity.adapter.clear();
+		
+		for(int i = 0; i < locs.size(); i++) {
+			LocationsActivity.adapter.add(locs.get(i));
+		}
+		
+		LocationsActivity.adapter.notifyDataSetChanged();
+	}
+	
+	@Override
+	protected Void doInBackground(Void... arg0) {
+		locs = getNearby();
+		
+		return null;
+	}
+	
+	public ArrayList<String> getNearby() {
+		String apiKEY = "AIzaSyDVPNAcM0EkhqgGIDcaaN7Mr1d2pw4ZMBE";
+		
+		TembooSession session = null;
+		try {
+			session = new TembooSession("gaver10", "myFirstApp", "c336c82fc4c641279410c79d9071a3c4");
+		} catch (TembooException e2) {
+			e2.printStackTrace();
+		}
 		PlaceSearch placeSearchChoreo = new PlaceSearch(session);
 
 		// Get an InputSet object for the choreo
@@ -29,12 +50,17 @@ public class GooglePlaceManager {
 
 		// Set inputs
 		placeSearchInputs.set_Key(apiKEY);
-		placeSearchInputs.set_Latitude(userI.getLat());
-		placeSearchInputs.set_Longitude(userI.getLon());
 		placeSearchInputs.set_Radius(1000);
+		placeSearchInputs.set_Latitude("39.9");//userI.getLat());
+		placeSearchInputs.set_Longitude("-75.1");//userI.getLon());
 
 		// Execute Choreo
-		PlaceSearchResultSet placeSearchResults = placeSearchChoreo.execute(placeSearchInputs);
+		PlaceSearchResultSet placeSearchResults = null;
+		try {
+			placeSearchResults = placeSearchChoreo.execute(placeSearchInputs);
+		} catch (TembooException e1) {
+			e1.printStackTrace();
+		}
 		
 		String jsonData = placeSearchResults.get_Response();
 		
@@ -44,12 +70,9 @@ public class GooglePlaceManager {
         ArrayList<String> alist = new ArrayList<String>();
         for(JsonElement e : rootobj){
         	alist.add(e.getAsJsonObject().get("id").getAsString());
+        	System.out.println(e.getAsJsonObject().get("id").getAsString());
         }
 		
 		return alist;
-		
 	}
-	
-	
-	
 }

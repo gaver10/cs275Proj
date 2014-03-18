@@ -7,23 +7,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".LocationsActivity" >
 
-    <EditText
-        android:id="@+id/username"
+    <ListView
+        android:id="@+id/locations"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/username"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/submit"
-        android:onClick="onClick" />
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>

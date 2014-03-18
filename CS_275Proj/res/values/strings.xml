@@ -3,6 +3,20 @@
 
     <string name="app_name">CS_275Proj</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">PerkRate</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="location">Location</string>
+    <string name="profile">Profile</string>
+    <string name="awards">Awards</string>
+    <string name="search">Search</string>
+    <string name="title_activity_locations">LocationsActivity</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="username">Enter User Name</string>
+    <string name="enterSearch">Enter id to search</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_awards">AwardsActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_find_search">FindSearchActivity</string>
 
 </resources>

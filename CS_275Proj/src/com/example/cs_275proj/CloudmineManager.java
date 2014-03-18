@@ -2,9 +2,11 @@
 package com.example.cs_275proj;
 
 import java.util.ArrayList;
+//import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
  
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -25,20 +27,14 @@ import com.temboo.core.TembooSession;
         private String apikey = "dfc150fe989c41869778972802e70b04";
         private String appkey = "976aa71a1bfe48258fcac26c097c9789";
         private TembooSession session;
-        private String LocDB;
-        private String UserDB;
-        private String ReviewDB;
+        private String LocDB = "LocDB";
+        private String UserDB = "UserDB";
+        private String ReviewDB = "ReviewDB";
         
-        public CloudmineManager(TembooSession s,String l,String u,String r) { 
-            
-             session = s;
-             LocDB = l;
-             UserDB = u;
-             ReviewDB = r;
+        public CloudmineManager(TembooSession s) {
+        	session = s;    		
         }
         
-       
-        //Todo
         public ArrayList<String> filterGoogle(ArrayList<String> googlePlaceList) throws TembooException{
             
             ObjectGet objectGetChoreo = new ObjectGet(session);
@@ -98,7 +94,7 @@ import com.temboo.core.TembooSession;
             }
             finalRating = finalRating / count;
             
-            return (Integer) finalRating;
+            return finalRating;
         }
         	
         public void sendReview(String review,String rating, UserInfo user,String locid) throws TembooException{
@@ -133,7 +129,6 @@ import com.temboo.core.TembooSession;
             
             ObjectUpdateResultSet objectUpdateResults = objectUpdateChoreo.execute(objectUpdateInputs);
            
-           //TODO:
            updateUserPoints(user,locid);
            updateReviewIds(user,locid,reviewId);
            
@@ -348,9 +343,7 @@ import com.temboo.core.TembooSession;
             
             
             
-            
-            
-            public ArrayList<String> getLocPrizes(String locid) {
+            public ArrayList<String> getLocPrizes(String locid) throws TembooException {
                 
                 ObjectGet objectGetChoreo = new ObjectGet(session);
 
@@ -370,14 +363,12 @@ import com.temboo.core.TembooSession;
                 // the whole location database
                 JsonObject userObject = rootobj.get(LocDB).getAsJsonObject();
                 JsonObject location = userObject.get(locid).getAsJsonObject();
-                JsonObject rewards = location.get("rewards").getAsJsonObject();
+                JsonArray rewards = location.get("rewards").getAsJsonArray();
                 
                 ArrayList<String> rewardString = new ArrayList<String>();
-                for (JsonObject rewardID: rewards ) {
-                   JsonObject eachReward =  rewards.get("rewardID").getAsJsonObject();
-                   String name = eachReward.get("reward").getAsString();
-                   String cost = eachReward.get("cost").getAsString(); 
-                      rewardString.add(name + "   " + cost);
+                for (int i=0; i<rewards.size(); i++) {
+                	rewardString.add(rewards.get(i).getAsJsonObject().get("reward").getAsString());
+                	//System.out.println(reward);
                 }
                 
                 return rewardString;
@@ -386,7 +377,6 @@ import com.temboo.core.TembooSession;
             
             	public Integer getPoints (String locid, String userid) {
                 
-                Integer points = 0;
                 ObjectGet objectGetChoreo = new ObjectGet(session);
 
                 // Get an InputSet object for the choreo

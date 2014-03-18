@@ -1,17 +1,6 @@
 package com.example.cs_275proj;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Scanner;
-
-import com.google.gson.JsonArray;
+//import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -27,10 +16,8 @@ import com.temboo.Library.Facebook.Reading.User.UserResultSet;
 import com.temboo.core.TembooException;
 import com.temboo.core.TembooSession;
 
-
 public class FaceBookManager {
 	public static void main (String args[]) throws TembooException {
-		
 		// Temboo data
 		String acctName = "denisaqori";
 		String appKeyName = "myFirstApp";
@@ -49,8 +36,6 @@ public class FaceBookManager {
 		System.out.println("Go to the URL below and allow the application to access your Facebook account: ");
 		System.out.println("Press enter to continue the execution of the program:");
 		System.out.println(authURL);
-		Scanner in = new Scanner (System.in);
-		in.nextLine();
 		
 		FinalizeOAuthResultSet finalizeOAuthResults = finalize (session, appID, appSecret, callbackID);
 		String accessToken = finalizeOAuthResults.get_AccessToken();
@@ -58,7 +43,6 @@ public class FaceBookManager {
 		String expires = finalizeOAuthResults.get_Expires();
 		
 		String userID = getUserID(session, accessToken);
-		System.out.println("The Facebook ID of the user is: " + userID);
 	}
 	
 	public static InitializeOAuthResultSet initialize (TembooSession session, String appID) throws TembooException {

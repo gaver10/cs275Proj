@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".HomeActivity" >
+
+    <Button
+        android1:id="@+id/location"
+        android1:layout_width="match_parent"
+        android1:layout_height="wrap_content"
+        android1:text="@string/location"
+        android1:onClick="onClick" />
+
+    <Button
+        android1:id="@+id/profile"
+        android1:layout_width="fill_parent"
+        android1:layout_height="wrap_content"
+        android1:text="@string/profile"
+        android1:onClick="onClick" />
+
+    <Button
+        android1:id="@+id/awards"
+        android1:layout_width="fill_parent"
+        android1:layout_height="wrap_content"
+        android1:text="@string/awards"
+        android1:onClick="onClick" />
+    
+    <Button
+        android1:id="@+id/search"
+        android1:layout_width="fill_parent"
+        android1:layout_height="wrap_content"
+        android1:text="@string/search"
+        android1:onClick="onClick" />
+
+</LinearLayout>
